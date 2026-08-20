@@ -1,5 +1,7 @@
 package one.digitalinnovation.gof.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import one.digitalinnovation.gof.dto.ClienteRequest;
 import one.digitalinnovation.gof.model.Cliente;
 import one.digitalinnovation.gof.service.ClienteService;
 
@@ -39,15 +42,16 @@ public class ClienteRestController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Cliente> inserir(@RequestBody Cliente cliente) {
-		clienteService.inserir(cliente);
-		return ResponseEntity.ok(cliente);
+	public ResponseEntity<Void> inserir(@Valid @RequestBody ClienteRequest clienteRequest) {
+		clienteService.inserir(clienteRequest);
+		return ResponseEntity.ok().build();
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Cliente> atualizar(@PathVariable Long id, @RequestBody Cliente cliente) {
-		clienteService.atualizar(id, cliente);
-		return ResponseEntity.ok(cliente);
+	public ResponseEntity<Void> atualizar(@PathVariable Long id,
+			@Valid @RequestBody ClienteRequest clienteRequest) {
+		clienteService.atualizar(id, clienteRequest);
+		return ResponseEntity.ok().build();
 	}
 
 	@DeleteMapping("/{id}")

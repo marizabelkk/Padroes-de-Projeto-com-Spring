@@ -13,6 +13,7 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String nome;
+	private boolean ativo = true;
 	@ManyToOne
 	private Endereco endereco;
 
@@ -30,6 +31,14 @@ public class Cliente {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	public Endereco getEndereco() {
