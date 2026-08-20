@@ -1,8 +1,11 @@
-Validação de Dados (Bean Validation):
-No projeto original, a API aceitava requisições com dados vazios. Eu criei um DTO de entrada (ClienteRequest) usando o spring-boot-starter-validation. Agora, o Spring valida se o nome está preenchido e se o CEP tem um formato válido antes de tentar consultar o ViaCEP, retornando 400 Bad Request se algo estiver errado.
+Projeto desenvolvido durante o curso de Java/Spring Boot Santander e aprimorado com boas práticas de desenvolvimento de APIs REST. A aplicação utiliza a integração com a API do ViaCEP para preenchimento automático de endereços e aplica padrões de projeto fundamentais da arquitetura Spring.
 
-Exclusão Lógica (Soft Delete):
-Em vez de deletar o registro do banco de dados com deleteById(), implementei o Soft Delete. Adicionei um atributo ativo na entidade Cliente. Quando o método de exclusão é chamado, a API apenas altera esse campo para false. Além disso, ajustei as buscas no repositório para ignorar registros inativos, mantendo a integridade dos dados no banco.
+Melhorias Implementadas:
+-Validação de Dados (Bean Validation): Criação de DTO de entrada (ClienteRequest) com validação de campos obrigatórios (@NotBlank) e formato do CEP via Regex.
+-Exclusão Lógica (Soft Delete): Inclusão da propriedade ativo na entidade Cliente. A exclusão altera a flag para false, garantindo retenção de histórico no banco de dados e filtrando os registros inativos nas consultas.
+-Tratamento de Respostas HTTP: Tratamento de buscas por ID inexistente ou inativo para retornar 404 Not Found em vez de exceções não tratadas (500).
 
-Tratamento de Exceção e Códigos HTTP Corretores (404):
-Ajustei a busca por ID para tratar cenários em que o cliente não existe ou foi desativado. Em vez de permitir uma exceção e estourar erro 500 Internal Server Error, a API agora trata a ausência do registro e responde com 404 Not Found, seguindo as boas práticas do padrão REST.
+Design Patterns Aplicados:
+-Facade: Abstração e isolamento da comunicação com a API externa do ViaCEP.
+-Strategy: Abstração da camada de persistência com Spring Data JPA.
+-Singleton: Injeção de dependências e gerenciamento de Beans feito pelo Spring IoC.
